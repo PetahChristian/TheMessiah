@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6254" systemVersion="14C81f" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="JCMBook" representedClassName="JCMBook" syncable="YES">
+        <attribute name="numberOfProphecies" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="order" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="subtitle" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="title" attributeType="String" minValueString="1" syncable="YES"/>
+        <relationship name="references" toMany="YES" deletionRule="Deny" ordered="YES" destinationEntity="JCMReference" inverseName="book" inverseEntity="JCMReference" syncable="YES"/>
+    </entity>
+    <entity name="JCMCategory" representedClassName="JCMCategory" syncable="YES">
+        <attribute name="numberOfProphecies" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="order" attributeType="Integer 16" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="subtitle" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="title" attributeType="String" minValueString="1" syncable="YES"/>
+        <relationship name="subjects" toMany="YES" deletionRule="Deny" ordered="YES" destinationEntity="JCMSubject" inverseName="category" inverseEntity="JCMSubject" syncable="YES"/>
+    </entity>
+    <entity name="JCMProphecy" representedClassName="JCMProphecy" syncable="YES">
+        <relationship name="subjects" toMany="YES" deletionRule="Deny" destinationEntity="JCMSubject" inverseName="prophecies" inverseEntity="JCMSubject" syncable="YES"/>
+        <relationship name="verses" toMany="YES" deletionRule="Deny" ordered="YES" destinationEntity="JCMVerse" inverseName="prophecies" inverseEntity="JCMVerse" syncable="YES"/>
+    </entity>
+    <entity name="JCMReference" representedClassName="JCMReference" syncable="YES">
+        <attribute name="reference" attributeType="String" minValueString="1" syncable="YES"/>
+        <relationship name="book" maxCount="1" deletionRule="Deny" destinationEntity="JCMBook" inverseName="references" inverseEntity="JCMBook" syncable="YES"/>
+        <relationship name="subject" maxCount="1" deletionRule="Deny" destinationEntity="JCMSubject" inverseName="references" inverseEntity="JCMSubject" syncable="YES"/>
+    </entity>
+    <entity name="JCMSubject" representedClassName="JCMSubject" syncable="YES">
+        <attribute name="subtitle" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="title" attributeType="String" minValueString="1" syncable="YES"/>
+        <relationship name="category" maxCount="1" deletionRule="Deny" destinationEntity="JCMCategory" inverseName="subjects" inverseEntity="JCMCategory" syncable="YES"/>
+        <relationship name="prophecies" toMany="YES" deletionRule="Deny" ordered="YES" destinationEntity="JCMProphecy" inverseName="subjects" inverseEntity="JCMProphecy" syncable="YES"/>
+        <relationship name="references" toMany="YES" deletionRule="Deny" destinationEntity="JCMReference" inverseName="subject" inverseEntity="JCMReference" syncable="YES"/>
+    </entity>
+    <entity name="JCMVerse" representedClassName="JCMVerse" syncable="YES">
+        <attribute name="book" attributeType="Integer 16" minValueString="1" maxValueString="66" defaultValueString="1" syncable="YES"/>
+        <attribute name="bookChapterVerse" attributeType="Integer 32" minValueString="1001001" maxValueString="66022021" defaultValueString="1001001" syncable="YES"/>
+        <attribute name="reference" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="textESV" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="textKJV" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="textNASB" attributeType="String" minValueString="1" syncable="YES"/>
+        <relationship name="chapter" maxCount="1" deletionRule="Deny" destinationEntity="KJVChapter" inverseName="promises" inverseEntity="KJVChapter" syncable="YES"/>
+        <relationship name="prophecies" toMany="YES" deletionRule="Deny" destinationEntity="JCMProphecy" inverseName="verses" inverseEntity="JCMProphecy" syncable="YES"/>
+    </entity>
+    <entity name="KJVChapter" representedClassName="KJVChapter" syncable="YES">
+        <attribute name="abbreviatedTitle" attributeType="String" minValueString="1" syncable="YES"/>
+        <attribute name="title" attributeType="String" minValueString="1" syncable="YES"/>
+        <relationship name="nextChapter" maxCount="1" deletionRule="Deny" destinationEntity="KJVChapter" inverseName="previousChapter" inverseEntity="KJVChapter" syncable="YES"/>
+        <relationship name="previousChapter" maxCount="1" deletionRule="Deny" destinationEntity="KJVChapter" inverseName="nextChapter" inverseEntity="KJVChapter" syncable="YES"/>
+        <relationship name="promises" toMany="YES" deletionRule="Deny" destinationEntity="JCMVerse" inverseName="chapter" inverseEntity="JCMVerse" syncable="YES"/>
+        <relationship name="verses" toMany="YES" deletionRule="Deny" ordered="YES" destinationEntity="KJVVerse" inverseName="chapter" inverseEntity="KJVVerse" syncable="YES"/>
+    </entity>
+    <entity name="KJVVerse" representedClassName="KJVVerse" syncable="YES">
+        <attribute name="text" attributeType="String" minValueString="1" syncable="YES"/>
+        <relationship name="chapter" maxCount="1" deletionRule="Deny" destinationEntity="KJVChapter" inverseName="verses" inverseEntity="KJVChapter" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="JCMBook" positionX="-506" positionY="-72" width="128" height="118"/>
+        <element name="JCMCategory" positionX="-504" positionY="-288" width="128" height="118"/>
+        <element name="JCMProphecy" positionX="45" positionY="-144" width="128" height="73"/>
+        <element name="JCMReference" positionX="-324" positionY="-0" width="128" height="88"/>
+        <element name="JCMSubject" positionX="-146" positionY="-144" width="128" height="118"/>
+        <element name="JCMVerse" positionX="250" positionY="-145" width="128" height="163"/>
+        <element name="KJVChapter" positionX="72" positionY="-1" width="128" height="133"/>
+        <element name="KJVVerse" positionX="-117" positionY="-0" width="128" height="73"/>
+    </elements>
+</model>
